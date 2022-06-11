@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install EPEL repository
+      import_role:
+        name: geerlingguy.repo-epel
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install general software
+      import_role:
+        name: generic
+
+    - name: Install Docker
+      vars:
+        docker_users:
+          - '{{ansible_ssh_user}}'
+      import_role:
+        name: geerlingguy.docker
+
+    - name: Install Minikube
+      import_role:
+        name: gantsign.minikube
+
+    - name: Install kubectl
+      import_role:
+        name: kubectl
+
+
+

@@ -1,0 +1,33 @@
+---
+- name: Install general tools
+  ansible.builtin.package:
+    name:
+      - unzip
+      - curl
+      - wget
+      - git
+      - htop
+      - tmux
+    state: present
+    update_cache: true
+
+- name: Update .bashrc
+  ansible.builtin.copy:
+    src: "bashrc"
+    dest: "/home/{{ansible_user}}/.bashrc"
+    owner: "{{ansible_user}}"
+    mode: "0754"
+
+- name: upload .bash_aliases
+  ansible.builtin.copy:
+    src: "bash_aliases"
+    dest: "/home/{{ansible_user}}/.bash_aliases"
+    owner: "{{ansible_user}}"
+    mode: "0754"
+
+- name: upload .tmux.conf
+  ansible.builtin.copy:
+    src: "tmux.conf"
+    dest: "/home/{{ansible_user}}/.tmux.conf"
+    owner: "{{ansible_user}}"
+    mode: "0754"
